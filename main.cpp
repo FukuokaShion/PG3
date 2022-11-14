@@ -1,5 +1,6 @@
 #include<stdio.h>
 
+//比較して小さいほうを返す
 template<typename Type>
 Type Min(Type a, Type b) {
 	if (a <= b) {
@@ -8,29 +9,28 @@ Type Min(Type a, Type b) {
 	return static_cast<Type>(b);
 }
 
-//char型のみ受け付けない(オーバーライド)
-template<>
-char Min<char>(char a, char b) {
-	printf("数字以外は代入できません\n");
-	return 0;
+//再帰的な給料の計算
+int Wage(int wage, int time) {
+	if (time <= 1) {
+		return wage;
+	}
+	return (wage + Wage(wage * 2 - 50, time - 1));
 }
 
 int main() {
-	int a = 114;
-	int b = 514;
-	printf("%d\n",Min(a, b));
+	int time = 8;
 
-	float c = 3.63f;
-	float d = 3.64f;
-	printf("%f\n", Min(c, d));
+	//再帰的な給料
+	int reflexiveResult;
+	reflexiveResult = Wage(100, time);
 
-	double e = 11.0005;
-	double f = 12.3141;
-	printf("%lf\n", Min(e, f));
-	
-	char g = 1;
-	char h = 4;
-	Min(g, h);
+	//一般的な給料
+	int generalWage = 1072;
+	int generalResult = generalWage * time;
+
+	//安いほうを書き出す
+	printf("%d\n", Min(reflexiveResult, generalResult));
+
 
 	return 0;
 }
