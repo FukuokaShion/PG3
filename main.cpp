@@ -1,85 +1,65 @@
 #include <stdio.h>
-#include <list>
-#include <iostream>
+#include <stdlib.h>
 
-using namespace std;
+//単方向リストの構造体
+typedef struct cell {
+	int val;
+	struct cell *next;
+}CELL;
+
+void create(CELL* cell, int val);
+void index(CELL* cell);
+
+
 int main(){
-//-----1970------
-	printf("-----1970年-----\n");
+	int val;
 
-	//リストを生成
-	list<const char*> list{
-		"Tokyo",
-		"Kanda",
-		"Akihabara",
-		"Okachimachi",
-		"Ueno",
-		"Uguisudani",
-		"Nippori",
-		"Tabata",
-		"Komagome",
-		"Sugamo",
-		"Otsuka",
-		"Ikebukuro",
-		"Mejiro",
-		"Takadanobaba",
-		"ShinOkubo",
-		"Shinjuku",
-		"Yoyogi",
-		"Harajuku",
-		"Shibuya",
-		"Ebisu",
-		"Meguro",
-		"Gotanda",
-		"Osaki",
-		"Shinagawa",
-		"Tamachi",
-		"Hamamatsucho",
-		"Shimbashi",
-		"Yurakucho"
-	};
-	
-	//リストの表示
-	for (auto itr = list.begin(); itr != list.end(); ++itr)
-	{
-		cout << *itr << "\n";
+	//先頭のセルの宣言
+	CELL head;
+	head.next = nullptr;
+
+	printf("start\n");
+	while (true){
+		printf("入力した数字を最後尾に追加\n");
+		scanf_s("%d", &val);
+		printf("LIST\n");
+
+		//最後尾にセルを追加
+		create(&head, val);
+		
+		//リストの一覧表示
+		index(&head);
+		printf("\n");
 	}
-
-
-//------2019-----
-	printf("-----2019年-----\n");
-	//リストに西日暮里を追加
-	for (auto itr = list.begin(); itr != list.end(); ++itr)
-	{
-		if (*itr == "Tabata") {
-			itr = list.insert(itr,"Nisinippori");
-			break;
-		}
-	}
-	//リストの表示
-	for (auto itr = list.begin(); itr != list.end(); ++itr)
-	{
-		cout << *itr << "\n";
-	}
-
-	printf("\n");
-
-//-----2022-----
-	printf("-----2022年-----\n");
-	//リストに高輪Gを追加
-	for (auto itr = list.begin(); itr != list.end(); ++itr)
-	{
-		if (*itr == "Tamachi") {
-			itr = list.insert(itr, "TakanawaGateway");
-			break;
-		}
-	}
-	//リストの表示
-	for (auto itr = list.begin(); itr != list.end(); ++itr)
-	{
-		cout << *itr << "\n";
-	}
-
 
 	return 0;
+}
+
+
+void create(CELL* cell, int val) {
+	//新規セル
+	CELL* newCell;
+	
+	//新規セルのメモリ確保
+	newCell = (CELL*)malloc(sizeof(CELL));
+
+	newCell->val = val;
+	newCell->next = nullptr;
+
+	//最後のセルのアドレスの一つ目の処理は引数から持ってきた
+	//リストのうち最初のセルのアドレスが該当
+	while (cell->next != nullptr) {
+		cell = cell->next;
+	}
+
+	//追加前の最後尾に新規セルのポインタを代入
+	cell->next = newCell;
+}
+
+
+void index(CELL* cell) {
+	while (cell->next != nullptr) {
+		cell = cell->next;
+		printf("%d\n", cell->val);
+	}
 }
