@@ -1,74 +1,84 @@
-#include "stdio.h"
-#include <stdlib.h>
-#include "windows.h"
+#include <stdio.h>
+#include <list>
+#include <iostream>
 
-typedef void (*PFunc)();
+using namespace std;
+int main(){
+//-----1970------
+	printf("-----1970年-----\n");
 
-//コールバック関数
-void Correct() {
-	printf("正解\n");
-
-}
-
-//コールバック関数
-void Incorrect() {
-	printf("はずれ\n");
-
-}
-
-
-void setTimeout(PFunc p, int second) {
-	//待機
-	Sleep(second * 1000);
-
-	//呼び出し
-	p();
-
-}
-
-
-int main()
-{
-	//入力
-	int anser = 0;
-
-	//関数ポインタ
-	PFunc p;
-	p = Correct;
-
-	//さいころ
-	int	dice = rand() % 6 + 1;
-	int remainder = dice % 2;
-
-
-	printf("偶数なら1、奇数なら-1を入力\n");
-	scanf_s("%d", &anser);
-
-	//選択が偶数なら
-	if (anser == 1) {
-		printf("偶数を選択\n");
-		//賽の目が偶数なら
-		if (remainder == 0) {
-			p = Correct;
-		}
-		else {
-			p = Incorrect;
-		}
-	}
-	else if (anser == -1) {
-		printf("奇数を選択\n");
-		//賽の目が奇数なら
-		if (remainder == 1) {
-			p = Correct;
-		}
-		else {
-			p = Incorrect;
-		}
+	//リストを生成
+	list<const char*> list{
+		"Tokyo",
+		"Kanda",
+		"Akihabara",
+		"Okachimachi",
+		"Ueno",
+		"Uguisudani",
+		"Nippori",
+		"Tabata",
+		"Komagome",
+		"Sugamo",
+		"Otsuka",
+		"Ikebukuro",
+		"Mejiro",
+		"Takadanobaba",
+		"ShinOkubo",
+		"Shinjuku",
+		"Yoyogi",
+		"Harajuku",
+		"Shibuya",
+		"Ebisu",
+		"Meguro",
+		"Gotanda",
+		"Osaki",
+		"Shinagawa",
+		"Tamachi",
+		"Hamamatsucho",
+		"Shimbashi",
+		"Yurakucho"
+	};
+	
+	//リストの表示
+	for (auto itr = list.begin(); itr != list.end(); ++itr)
+	{
+		cout << *itr << "\n";
 	}
 
-	//コールバック
-	setTimeout(p, 3);
-	printf("賽の目は%d\n", dice);
+
+//------2019-----
+	printf("-----2019年-----\n");
+	//リストに西日暮里を追加
+	for (auto itr = list.begin(); itr != list.end(); ++itr)
+	{
+		if (*itr == "Tabata") {
+			itr = list.insert(itr,"Nisinippori");
+			break;
+		}
+	}
+	//リストの表示
+	for (auto itr = list.begin(); itr != list.end(); ++itr)
+	{
+		cout << *itr << "\n";
+	}
+
+	printf("\n");
+
+//-----2022-----
+	printf("-----2022年-----\n");
+	//リストに高輪Gを追加
+	for (auto itr = list.begin(); itr != list.end(); ++itr)
+	{
+		if (*itr == "Tamachi") {
+			itr = list.insert(itr, "TakanawaGateway");
+			break;
+		}
+	}
+	//リストの表示
+	for (auto itr = list.begin(); itr != list.end(); ++itr)
+	{
+		cout << *itr << "\n";
+	}
 
 
 	return 0;
