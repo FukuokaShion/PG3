@@ -1,35 +1,74 @@
-#include<stdio.h>
+#include "stdio.h"
+#include <stdlib.h>
+#include "windows.h"
 
-//比較して小さいほうを返す
-template<typename Type>
-Type Min(Type a, Type b) {
-	if (a <= b) {
-		return static_cast<Type>(a);
-	}
-	return static_cast<Type>(b);
+typedef void (*PFunc)();
+
+//コールバック関数
+void Correct() {
+	printf("正解\n");
+
 }
 
-//再帰的な給料の計算
-int Wage(int wage, int time) {
-	if (time <= 1) {
-		return wage;
-	}
-	return (wage + Wage(wage * 2 - 50, time - 1));
+//コールバック関数
+void Incorrect() {
+	printf("はずれ\n");
+
 }
 
-int main() {
-	int time = 8;
 
-	//再帰的な給料
-	int reflexiveResult;
-	reflexiveResult = Wage(100, time);
+void setTimeout(PFunc p, int second) {
+	//待機
+	Sleep(second * 1000);
 
-	//一般的な給料
-	int generalWage = 1072;
-	int generalResult = generalWage * time;
+	//呼び出し
+	p();
 
-	//安いほうを書き出す
-	printf("%d\n", Min(reflexiveResult, generalResult));
+}
+
+
+int main()
+{
+	//入力
+	int anser = 0;
+
+	//関数ポインタ
+	PFunc p;
+	p = Correct;
+
+	//さいころ
+	int	dice = rand() % 6 + 1;
+	int remainder = dice % 2;
+
+
+	printf("偶数なら1、奇数なら-1を入力\n");
+	scanf_s("%d", &anser);
+
+	//選択が偶数なら
+	if (anser == 1) {
+		printf("偶数を選択\n");
+		//賽の目が偶数なら
+		if (remainder == 0) {
+			p = Correct;
+		}
+		else {
+			p = Incorrect;
+		}
+	}
+	else if (anser == -1) {
+		printf("奇数を選択\n");
+		//賽の目が奇数なら
+		if (remainder == 1) {
+			p = Correct;
+		}
+		else {
+			p = Incorrect;
+		}
+	}
+
+	//コールバック
+	setTimeout(p, 3);
+	printf("賽の目は%d\n", dice);
 
 
 	return 0;
