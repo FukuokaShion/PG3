@@ -80,6 +80,7 @@ int main(){
 		cout << *itr << "\n";
 	}
 
+	system("pause");
 
 	return 0;
 }
