@@ -70,6 +70,7 @@ int main()
 	setTimeout(p, 3);
 	printf("æÎ‚Ì–Ú‚Í%d\n", dice);
 
+	system("pause");
 
 	return 0;
 }
