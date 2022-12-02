@@ -1,21 +1,30 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include<string.h>
+
 
 //単方向リストの構造体
 typedef struct cell {
-	int val;
+	char val[256];
 	struct cell* prev;
 	struct cell *next;
 }CELL;
 
-void Create(CELL* cell, int val);
+void Create(CELL* cell,char *val);
 void Deleta(CELL* cell);
 void Index(CELL* cell);
+CELL* getInsertCellAddress(CELL* endCell, int iterator);
+
 
 
 int main(){
 	int play = 0;
 	int val;
+
+
+	int iterator;
+	int inputValue;
+	CELL* insertCell;
 
 	//先頭のセルの宣言
 	CELL head;
@@ -28,8 +37,7 @@ int main(){
 		case 0:
 			printf("[要素の操作]\n");
 			printf("1.要素の一覧表示\n");
-			printf("2.最後尾に要素の挿入\n");
-			printf("3.最後尾の要素の削除\n");
+			printf("2.任意の位置にに要素の挿入\n");
 			printf("\n");
 			printf("---------------------------\n");
 			printf("操作を選択してください\n");
@@ -50,32 +58,29 @@ int main(){
 
 			break;
 		case 2:
-			printf("[リスト要素の挿入]\n");
-			printf("追加する要素の値を入力してください\n");
-			scanf_s("%d", &val);
-			Create(&head, val);
-			printf("要素<%d>がリストの最後尾に挿入されました\n", val);
+			printf("何番目のセルの後ろに挿入しますか\n");
+			scanf_s("%d", &iterator);
+
+			printf("挿入する値を入力\n");
+			char ko[256];
+
+			scanf_s("%256s", ko,257);
+
+			insertCell = getInsertCellAddress(&head, iterator);
+
+
+			Create(insertCell, ko);
+			
+
 			printf("\n");
 			printf("--------------------------\n");
-			printf("0.初期画面に戻る\n");
-			scanf_s("%d", &play);
 
-			break;
-		case 3:
-			printf("[要素の削除]\n");
-			printf("最後尾の要素を削除しました\n");
-			Deleta(&head);
-			printf("\n\n");
-			printf("--------------------------\n");
 			printf("0.初期画面に戻る\n");
-			scanf_s("%d", &play);
+			scanf_s("%d", &play); 
 
 			break;
 		}
-
-		//最後尾にセルを追加
 		
-		//リストの一覧表示
 		printf("\n");
 	}
 
@@ -83,24 +88,24 @@ int main(){
 }
 
 
-void Create(CELL* cell, int val) {
+void Create(CELL* cell,char *val) {
 	//新規セル
 	CELL* newCell;
 	
 	//新規セルのメモリ確保
 	newCell = (CELL*)malloc(sizeof(CELL));
 
-	newCell->val = val;
-	newCell->next = nullptr;
-
-	//最後のセルのアドレスの一つ目の処理は引数から持ってきた
-	//リストのうち最初のセルのアドレスが該当
-	while (cell->next != nullptr) {
-		cell = cell->next;
-	}
-	//追加前の最後尾に新規セルのポインタを代入
+	strcpy_s(newCell->val,256, val);
+	newCell->next = cell->next;
 	newCell->prev = cell;
+
+	if (cell->next) {
+		CELL* nextCell = cell->next;
+		nextCell->prev = newCell;
+	}
+
 	cell->next = newCell;
+
 }
 
 void Deleta(CELL* cell) {
@@ -111,9 +116,28 @@ void Deleta(CELL* cell) {
 	cell->next = nullptr;
 }
 
-void Index(CELL* cell) {
-	while (cell->next != nullptr) {
-		cell = cell->next;
-		printf("%d\n", cell->val);
+void Index(CELL* endCell) {
+	int no = 1;
+	while (endCell->next != nullptr) {
+		endCell = endCell->next;
+		printf("%d\n", no);
+		printf("%p\n", endCell->prev);
+		printf("%s\n", endCell->val);
+		printf("(%p\n)", endCell);
+		printf("%p\n", endCell->next);
+		no++;
 	}
+}
+
+
+CELL* getInsertCellAddress(CELL *endCell,int iterator) {
+	for (int i = 0; i < iterator; i++) {
+		if (endCell->next) {
+			endCell = endCell->next;
+		}else
+		{
+			break;
+		}
+	}
+	return endCell;
 }
