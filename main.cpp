@@ -7,23 +7,18 @@
 typedef struct cell {
 	char val[256];
 	struct cell* prev;
-	struct cell *next;
+	struct cell* next;
 }CELL;
 
-void Create(CELL* cell,char *val);
+void Create(CELL* cell, char* val);
 void Deleta(CELL* cell);
 void Index(CELL* cell);
 CELL* getInsertCellAddress(CELL* endCell, int iterator);
 
 
 
-int main(){
-	int play = 0;
-	int val;
-
-
+int main() {
 	int iterator;
-	int inputValue;
 	CELL* insertCell;
 
 	//æ“ª‚ÌƒZƒ‹‚ÌéŒ¾
@@ -31,71 +26,63 @@ int main(){
 	head.next = nullptr;
 	head.prev = nullptr;
 
-	while (true){
-		switch (play)
-		{
-		case 0:
-			printf("[—v‘f‚Ì‘€ì]\n");
-			printf("1.—v‘f‚Ìˆê——•\¦\n");
-			printf("2.”CˆÓ‚ÌˆÊ’u‚É‚É—v‘f‚Ì‘}“ü\n");
-			printf("\n");
-			printf("---------------------------\n");
-			printf("‘€ì‚ğ‘I‘ğ‚µ‚Ä‚­‚¾‚³‚¢\n");
-			scanf_s("%d", &play);
-
-			break;
-		case 1:
-			printf("[—v‘f‚Ìˆê——•\¦]\n");
-			printf("—v‘fˆê——:{\n");
-			Index(&head);
-			printf("}\n");
-			printf("\n");
-			printf("—v‘f”:%d\n",0);
-			printf("\n");
-			printf("--------------------------\n");
-			printf("0.‰Šú‰æ–Ê‚É–ß‚é\n");
-			scanf_s("%d", &play);
-
-			break;
-		case 2:
-			printf("‰½”Ô–Ú‚ÌƒZƒ‹‚ÌŒã‚ë‚É‘}“ü‚µ‚Ü‚·‚©\n");
-			scanf_s("%d", &iterator);
-
-			printf("‘}“ü‚·‚é’l‚ğ“ü—Í\n");
-			char ko[256];
-
-			scanf_s("%256s", ko,257);
-
-			insertCell = getInsertCellAddress(&head, iterator);
-
-
-			Create(insertCell, ko);
-			
-
-			printf("\n");
-			printf("--------------------------\n");
-
-			printf("0.‰Šú‰æ–Ê‚É–ß‚é\n");
-			scanf_s("%d", &play); 
-
-			break;
-		}
-		
-		printf("\n");
+	char name[29][256] = {
+	"Tokyo",
+	"Kanda",
+	"Akihabara",
+	"Okachimachi",
+	"Ueno",
+	"Uguisudani",
+	"Nippori",
+	"NishiNippori",
+	"Tabata",
+	"Komagome",
+	"Sugamo",
+	"Otsuka",
+	"Ikebukuro",
+	"Mejiro",
+	"Takadanobaba",
+	"ShinOkubo",
+	"Shinjuku",
+	"Yoyogi",
+	"Harajuku",
+	"Shibuya",
+	"Ebisu",
+	"Meguro",
+	"Gotanda",
+	"Osaki",
+	"Shinagawa",
+	"Tamachi",
+	"Hamamatsucho",
+	"Shimbashi",
+	"Yurakucho"
+	};
+	for (int i = 0; i < 29; i++) {
+		insertCell = getInsertCellAddress(&head, i);
+		Create(insertCell, name[i]);
 	}
+	Index(&head);
 
+	printf("----------------------------------");
+
+	insertCell = getInsertCellAddress(&head, 25);
+	char iterater[256] = "TakanawaG";
+	Create(insertCell, iterater);
+	Index(&head);
+
+	system("pause");
 	return 0;
 }
 
 
-void Create(CELL* cell,char *val) {
+void Create(CELL* cell, char* val) {
 	//V‹KƒZƒ‹
 	CELL* newCell;
-	
+
 	//V‹KƒZƒ‹‚Ìƒƒ‚ƒŠŠm•Û
 	newCell = (CELL*)malloc(sizeof(CELL));
 
-	strcpy_s(newCell->val,256, val);
+	strcpy_s(newCell->val, 256, val);
 	newCell->next = cell->next;
 	newCell->prev = cell;
 
@@ -120,21 +107,19 @@ void Index(CELL* endCell) {
 	int no = 1;
 	while (endCell->next != nullptr) {
 		endCell = endCell->next;
-		printf("%d\n", no);
-		printf("%p\n", endCell->prev);
+		printf("%d : ", no);
 		printf("%s\n", endCell->val);
-		printf("(%p\n)", endCell);
-		printf("%p\n", endCell->next);
 		no++;
 	}
 }
 
 
-CELL* getInsertCellAddress(CELL *endCell,int iterator) {
+CELL* getInsertCellAddress(CELL* endCell, int iterator) {
 	for (int i = 0; i < iterator; i++) {
 		if (endCell->next) {
 			endCell = endCell->next;
-		}else
+		}
+		else
 		{
 			break;
 		}
