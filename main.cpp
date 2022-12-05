@@ -17,10 +17,13 @@ void Incorrect() {
 }
 
 
-void setTimeout(PFunc p, int second) {
-
+void setTimeout(int anser,int remainder,PFunc p, int second) {
 	//待機
 	Sleep(second * 1000);
+
+	if (anser != remainder) {
+		p = Incorrect;
+	}
 
 	//呼び出し
 	p();
@@ -44,16 +47,8 @@ int main()
 	printf("偶数なら0、奇数なら1を入力\n");
 	scanf_s("%d", &anser);
 
-
-	if (anser == remainder) {
-		p = Correct;
-	}
-	else {
-		p = Incorrect;
-	}
-
 	//コールバック
-	setTimeout(p, 3);
+	setTimeout(anser, remainder, p, 3);
 
 	printf("賽の目は%d\n", dice);
 
