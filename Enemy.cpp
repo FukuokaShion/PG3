@@ -1,25 +1,40 @@
 #include "Enemy.h"
+#include <stdio.h>
 
-int Enemy::num;
-
-Enemy::Enemy() {}
-
-Enemy::~Enemy() {}
-
-void Enemy::Initialize() {
-	isAlive = true;
-	num++;
+Enemy::Enemy(){
 }
 
-void Enemy::Update() {
+Enemy::~Enemy(){
+}
+
+void Enemy::Initialize(){
+	phaseNum = 0;
+}
+
+void Enemy::Update(){
+	(this->*pFuncTable[phaseNum])();
+
+	phaseNum++;
 	
-	if (isAlive == false) {
-		isAllAlive = false;
+	if (phaseNum > 2) {
+		phaseNum = 0;
 	}
-
-	if(isAllAlive==false) {
-		isAlive = false;
-	}
-
-
 }
+
+void Enemy::Approach(){
+	printf("ê⁄ãﬂ\n");
+}
+
+void Enemy::Shooting(){
+	printf("çUåÇ\n");
+}
+
+void Enemy::Secession(){
+	printf("ó£íE\n");
+}
+
+void (Enemy::* Enemy::pFuncTable[])() ={
+	&Enemy::Approach,
+	&Enemy::Shooting,
+	&Enemy::Secession,
+};

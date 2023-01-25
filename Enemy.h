@@ -10,9 +10,13 @@ public:
 
 	void Update();
 
-	static int num;
-	static bool isAllAlive;
+	void Approach();
+	void Shooting();
+	void Secession();
 
-	bool isAlive;
+private:
+
+	static void (Enemy::* pFuncTable[])();
+	int phaseNum = 0;
 	
 };
