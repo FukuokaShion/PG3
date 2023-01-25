@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <Windows.h>
 #include "SceneManager.h"
+
 int main() {
 
 	SceneManager* sceneManager = SceneManager::GetInstance();
