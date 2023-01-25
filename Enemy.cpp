@@ -21,6 +21,12 @@ void Enemy::Update(){
 	}
 }
 
+void (Enemy::* Enemy::pFuncTable[])() = {
+	&Enemy::Approach,
+	&Enemy::Shooting,
+	&Enemy::Secession,
+};
+
 void Enemy::Approach(){
 	printf("ê⁄ãﬂ\n");
 }
@@ -32,9 +38,3 @@ void Enemy::Shooting(){
 void Enemy::Secession(){
 	printf("ó£íE\n");
 }
-
-void (Enemy::* Enemy::pFuncTable[])() ={
-	&Enemy::Approach,
-	&Enemy::Shooting,
-	&Enemy::Secession,
-};
