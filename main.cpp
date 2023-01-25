@@ -7,44 +7,37 @@
 
 #include"Enemy.h"
 
-bool Enemy::isDead;
+bool Enemy::isAllAlive = true;
 
 int	main() {
 
-	int select;
-	const int enemyMax = 2;
-	std::list<std::unique_ptr<Enemy>>enemys_;
-
-	for (size_t i = 0; i < enemyMax; i++){
-		std::unique_ptr<Enemy> newEnemy = std::make_unique<Enemy>();
-		enemys_.push_back(std::move(newEnemy));
-
+	const int enemyMax = 3;
+	Enemy* enemy[enemyMax];
+	for (int i = 0; i < enemyMax; i++) {
+		enemy[i] = new Enemy();
+		enemy[i]->Initialize();
 	}
 
-	while (true)
-	{
-		printf("1‚©2‚ð‘I‘ð\n");
+
+	while (true){
+		printf("“G‚Í%d‘Ì\n", Enemy::num);
+
+		int select;
+		printf("1`3‚Å“|‚µ‚½‚¢“G‚ð“ü—Í\n");
 		scanf_s("%d", &select);
+		enemy[select-1]->isAlive = false;
+		printf("%d‚Ì“G‚ð“|‚µ‚½\n", select);
 
-		if (select == 1 || select == 2)
-		{
-			Enemy::isDead = true;
-
-		}else {
-			printf("1‚©2ˆÈŠO‚Í“ü—Í‚Å‚«‚Ü‚¹‚ñ\n");
-
+		for (int i = 0; i < enemyMax; i++) {
+			enemy[i]->Update();
 		}
 
-		if (Enemy::isDead){
-			enemys_.remove_if([](std::unique_ptr<Enemy>& enemy) { return Enemy::isDead; });
-			Enemy::AllFallDown();
-			break;
+		if (Enemy::isAllAlive == false) {
+			printf("‘S‚Ä‚Ì“G‚ð“|‚µ‚½\n");
 		}
 
+		system("Pause");
 	}
-
-
-	system("Pause");
 
 	return	0;
 }

@@ -2,18 +2,24 @@
 
 int Enemy::num;
 
+Enemy::Enemy() {}
 
-Enemy::Enemy() {
+Enemy::~Enemy() {}
+
+void Enemy::Initialize() {
+	isAlive = true;
 	num++;
-	printf("“G%d\n", num);
 }
 
-Enemy::~Enemy() {
-	num--;
-}
-
-void Enemy::AllFallDown() {
-	if (num == 0){
-		printf("‘S‚Ä‚Ì“G‚ğíœ\n");
+void Enemy::Update() {
+	
+	if (isAlive == false) {
+		isAllAlive = false;
 	}
+
+	if(isAllAlive==false) {
+		isAlive = false;
+	}
+
+
 }

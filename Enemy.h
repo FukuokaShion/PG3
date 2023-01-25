@@ -3,13 +3,16 @@
 
 class Enemy{
 protected:
-
 public:
 	Enemy();
-
 	~Enemy();
+	void Initialize();
 
-	static void AllFallDown();
+	void Update();
+
 	static int num;
-	static bool isDead;
+	static bool isAllAlive;
+
+	bool isAlive;
+	
 };
