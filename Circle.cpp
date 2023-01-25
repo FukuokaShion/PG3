@@ -1,0 +1,19 @@
+#include"Circle.h"
+#include <stdio.h>
+#include<math.h>
+
+Circle::Circle() {
+	rad = 3;
+}
+
+Circle::~Circle() {
+}
+
+void Circle::Size() {
+	size = pow(rad, 2) * PI;
+	printf("â~ÇÃñ êœÇåvéZ\n");
+}
+
+void Circle::Draw() {
+	printf("â~ÇÃñ êœ:%f\n", size);
+}
