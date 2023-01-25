@@ -1,58 +1,50 @@
-#include "stdio.h"
-#include <stdlib.h>
-#include "windows.h"
+#include<stdio.h>
+#include<stdlib.h>
+#include<conio.h>
+#include<iostream>
+#include<memory>
+#include<list>
 
-typedef void (*PFunc)();
+#include"Enemy.h"
 
-//コールバック関数
-void Correct() {
-	printf("正解\n");
+bool Enemy::isDead;
 
-}
+int	main() {
 
-//コールバック関数
-void Incorrect() {
-	printf("はずれ\n");
+	int select;
+	const int enemyMax = 2;
+	std::list<std::unique_ptr<Enemy>>enemys_;
 
-}
+	for (size_t i = 0; i < enemyMax; i++){
+		std::unique_ptr<Enemy> newEnemy = std::make_unique<Enemy>();
+		enemys_.push_back(std::move(newEnemy));
 
-
-void setTimeout(int anser,int remainder,PFunc p, int second) {
-	//待機
-	Sleep(second * 1000);
-
-	if (anser != remainder) {
-		p = Incorrect;
 	}
 
-	//呼び出し
-	p();
+	while (true)
+	{
+		printf("1か2を選択\n");
+		scanf_s("%d", &select);
 
-}
+		if (select == 1 || select == 2)
+		{
+			Enemy::isDead = true;
+
+		}else {
+			printf("1か2以外は入力できません\n");
+
+		}
+
+		if (Enemy::isDead){
+			enemys_.remove_if([](std::unique_ptr<Enemy>& enemy) { return Enemy::isDead; });
+			Enemy::AllFallDown();
+			break;
+		}
+
+	}
 
 
-int main()
-{
-	//入力
-	int anser = 0;
+	system("Pause");
 
-	//関数ポインタ
-	PFunc p;
-	p = Correct;
-
-	//さいころ
-	int	dice = rand() % 6 + 1;
-	int remainder = dice % 2;
-
-	printf("偶数なら0、奇数なら1を入力\n");
-	scanf_s("%d", &anser);
-
-	//コールバック
-	setTimeout(anser, remainder, p, 3);
-
-	printf("賽の目は%d\n", dice);
-
-	system("pause");
-
-	return 0;
+	return	0;
 }
