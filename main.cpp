@@ -1,58 +1,53 @@
-#include "stdio.h"
-#include <stdlib.h>
-#include "windows.h"
+#include<stdio.h>
+#include<stdlib.h>
+#include<time.h>
+#include<Windows.h>
 
-typedef void (*PFunc)();
+typedef void (*PFunc)(int);
 
-//コールバック関数
-void Correct() {
-	printf("正解\n");
+void callback(int num) {
+	//乱数処理
+	srand(time(nullptr));
+	int	dice = rand() % 6 + 1;
 
+	//判定
+	if (dice % 2 == num){
+		printf("%dで正解\n", dice);
+	}else{
+		printf("%dで不正解\n", dice);
+	}
 }
 
-//コールバック関数
-void Incorrect() {
-	printf("はずれ\n");
-
-}
-
-
-void setTimeout(int anser,int remainder,PFunc p, int second) {
-	//待機
+void	setTimeout(PFunc p, int answer, int second) {
+	printf("結果は\n");
 	Sleep(second * 1000);
 
-	if (anser != remainder) {
-		p = Incorrect;
-	}
-
-	//呼び出し
-	p();
-
+	p(answer);
 }
 
+int main(){
+	int answer;
 
-int main()
-{
-	//入力
-	int anser = 0;
+	while (true)
+	{
+		printf("偶数だと思うなら0、奇数なら1を入力\n");
 
-	//関数ポインタ
-	PFunc p;
-	p = Correct;
+		scanf_s("%d", &answer);
+		if (answer == 0 || answer == 1){
+			break;
 
-	//さいころ
-	int	dice = rand() % 6 + 1;
-	int remainder = dice % 2;
+		}else{
+			printf("0または1を入力\n");
 
-	printf("偶数なら0、奇数なら1を入力\n");
-	scanf_s("%d", &anser);
+		}
+	}
 
-	//コールバック
-	setTimeout(anser, remainder, p, 3);
+	PFunc p = callback;
 
-	printf("賽の目は%d\n", dice);
+	setTimeout(p, answer, 3);
 
 	system("pause");
 
 	return 0;
+
 }
