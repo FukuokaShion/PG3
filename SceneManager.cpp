@@ -1,23 +1,40 @@
-#include <stdio.h>
-#include <Windows.h>
 #include "SceneManager.h"
+#include <stdio.h>
 
-int main() {
+SceneManager::SceneManager() {}
 
-	SceneManager* sceneManager = SceneManager::GetInstance();
-	int scene = 0;
+SceneManager::~SceneManager() {}
 
-	while (TRUE) {
-		if (scene > 3) {
-			scene = 0;
-		}
 
-		sceneManager->ChangeScene(scene);
-		scene++;
-		Sleep(1 * 1000);
+SceneManager* SceneManager::GetInstance(){
+	static SceneManager instance;
+
+	return &instance;
+}
+
+void SceneManager::ChangeScene(int sceneNo){
+	switch (sceneNo){
+	case 0:
+		printf("SceneNo:0\n");
+		printf("Titleシーン\n");
+
+		break;
+	case 1:
+		printf("SceneNo:1\n");
+		printf("NewGameシーン\n");
+
+		break;
+	case 2:
+		printf("SceneNo:2\n");
+		printf("GamePlayシーン\n");
+
+		break;
+	case 3:
+		printf("SceneNo:3\n");
+		printf("GameClearシーン\n");
+
+		break;
+	default:
+		break;
 	}
-
-	system("pause");
-	return 0;
-
 }

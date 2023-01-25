@@ -1,22 +1,26 @@
 #include <stdio.h>
 #include <Windows.h>
 #include "SceneManager.h"
-int main() {
 
+int main() {
+	
 	SceneManager* sceneManager = SceneManager::GetInstance();
+	
 	int scene = 0;
 
 	while (TRUE) {
-		if (scene > 3) {
+		sceneManager->ChangeScene(scene);
+
+		if (scene < 3) {
+			scene++;
+		}
+		else if (scene >= 3) {
 			scene = 0;
 		}
 
-		sceneManager->ChangeScene(scene);
-		scene++;
-		Sleep(1 * 1000);
+		system("pause");
 	}
 
-	system("pause");
 	return 0;
 
 }

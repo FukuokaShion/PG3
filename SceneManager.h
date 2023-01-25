@@ -1,54 +1,20 @@
-#include "SceneManager.h"
+#pragma once
 
-#include "SceneManager.h"
-#include <stdio.h>
+class SceneManager final{
+private:
+	//コンストラクタをprivateにする
+	SceneManager();
+	//デストラクタをprivateにする
+	~SceneManager();
 
-SceneManager::SceneManager() {}
+public:
+	// コピーコンストラクタを無効にする
+	SceneManager(const SceneManager&) = delete;
+	//代入演算子を無効にする
+	SceneManager& operator=(const SceneManager&) = delete;
+	// インスタンス
+	static SceneManager* GetInstance();
 
-SceneManager::~SceneManager() {}
+	void ChangeScene(int sceneNo);
 
-
-SceneManager* SceneManager::GetInstance()
-{
-	// 関数内static変数として宣言する
-	static SceneManager instance;
-
-	return &instance;
-}
-
-void SceneManager::ChangeScene(int sceneNo)
-{
-	switch (sceneNo)
-	{
-	case 0:
-		TitleScene();
-		break;
-	case 1:
-		NewGameScene();
-		break;
-	case 2:
-		GamePlayScene();
-		break;
-	case 3:
-		GameClear();
-		break;
-	default:
-		break;
-	}
-}
-
-void SceneManager::TitleScene() {
-	printf("SceneNo:0\n");
-}
-
-void SceneManager::NewGameScene() {
-	printf("SceneNo:1\n");
-}
-
-void SceneManager::GamePlayScene() {
-	printf("SceneNo:2\n");
-}
-
-void SceneManager::GameClear() {
-	printf("SceneNo:3\n");
-}
+};
